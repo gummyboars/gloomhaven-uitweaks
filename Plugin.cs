@@ -8,6 +8,11 @@ using BepInEx.Logging;
 using HarmonyLib;
 using HarmonyLib.Tools;
 
+using UnityEngine;
+using UnityEngine.UI;
+
+using ScenarioRuleLibrary;
+
 
 namespace UITweaks;
 
@@ -42,7 +47,7 @@ public class UITweaksPlugin : BaseUnityPlugin
 // Upon exiting any of the three windows (merchant, temple, enchantress), save the selected
 // character. Upon entering any of the three (EnableSelectionMode), restore the selected character.
 [HarmonyPatch]
-public static class Patcher
+public static class WindowPatcher
 {
     public static int savedIndex = -1;
 
@@ -77,5 +82,34 @@ public static class Patcher
             MethodInfo OnCharacterSelect = typeof(NewPartyDisplayUI).GetMethod("OnCharacterSelect", BindingFlags.NonPublic | BindingFlags.Instance);
             OnCharacterSelect.Invoke(__instance, new object[] {true, selectedCharacter});
         }
+    }
+}
+
+// When showing the circular card counters in the UI, have max 5 counters per line.
+[HarmonyPatch(typeof(UIScenarioAttackModifier), "UpdateCounters", new Type[] {typeof(int)})]
+public static class UpdateCountersPatch
+{
+    private static void Postfix(Transform ___countersHolder)
+    {
+        ___countersHolder.GetComponent<GridLayoutGroup>().constraint = GridLayoutGroup.Constraint.FixedColumnCount;
+        ___countersHolder.GetComponent<GridLayoutGroup>().constraintCount = 5;
+        GridLayoutGroup g = ___countersHolder.GetComponent<GridLayoutGroup>();
+        var spc = g.spacing;
+        spc.x = g.cellSize.x / 2;
+        ___countersHolder.GetComponent<GridLayoutGroup>().spacing = spc;
+    }
+}
+
+[HarmonyPatch(typeof(UIAttackModifierCalculator), "SetupCounters")]
+public static class SetupCountersPatch
+{
+    private static void Postfix(Transform ___container)
+    {
+        ___container.GetComponent<GridLayoutGroup>().constraint = GridLayoutGroup.Constraint.FixedColumnCount;
+        ___container.GetComponent<GridLayoutGroup>().constraintCount = 5;
+        GridLayoutGroup g = ___container.GetComponent<GridLayoutGroup>();
+        var spc = g.spacing;
+        spc.x = g.cellSize.x / 2;
+        ___container.GetComponent<GridLayoutGroup>().spacing = spc;
     }
 }

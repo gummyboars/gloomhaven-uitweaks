@@ -26,6 +26,15 @@
     <Reference Include="GH.Runtime">
       <HintPath>$(HOME)/.steam/steamapps/common/Gloomhaven/GH_Data/Managed/GH.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="ScenarioRuleLibrary">
+      <HintPath>$(HOME)/.steam/steamapps/common/Gloomhaven/GH_Data/Managed/ScenarioRuleLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>$(HOME)/.steam/steamapps/common/Gloomhaven/GH_Data/Managed/UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>$(HOME)/.steam/steamapps/common/Gloomhaven/GH_Data/Managed/UnityEngine.UI.dll</HintPath>
+    </Reference>
   </ItemGroup>
   
   <ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
