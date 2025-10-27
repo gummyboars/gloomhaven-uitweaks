@@ -21,7 +21,7 @@ public class UITweaksPlugin : BaseUnityPlugin
 {
     const string pluginGUID = "com.gummyboars.gloomhaven.uitweaks";
     const string pluginName = "UI Tweaks";
-    const string pluginVersion = "1.0.0";
+    const string pluginVersion = "1.1.0";
 
     private Harmony HarmonyInstance = null;
 
