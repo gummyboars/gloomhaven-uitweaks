@@ -46,6 +46,7 @@ public class UITweaksPlugin : BaseUnityPlugin
 
 // Upon exiting any of the three windows (merchant, temple, enchantress), save the selected
 // character. Upon entering any of the three (EnableSelectionMode), restore the selected character.
+// Also save the selected character on the map screen when the user selects items/perks/cards/etc.
 [HarmonyPatch]
 public static class WindowPatcher
 {
@@ -70,6 +71,46 @@ public static class WindowPatcher
     private static void PrefixEnchantress()
     {
         savedIndex = NewPartyDisplayUI.PartyDisplay.SelectedSlotIndex;
+    }
+
+    [HarmonyPostfix]
+    [HarmonyPatch(typeof(NewPartyDisplayUI), "OnCardsSelected", new Type[] {typeof(NewPartyCharacterUI), typeof(bool), typeof(bool), typeof(bool)})]
+    private static void PostfixSelectCards(NewPartyDisplayUI __instance)
+    {
+        if (__instance.SelectedSlotIndex >= 0)
+        {
+            savedIndex = __instance.SelectedSlotIndex;
+        }
+    }
+
+    [HarmonyPostfix]
+    [HarmonyPatch(typeof(NewPartyDisplayUI), "OnItemsSelected")]
+    private static void PostfixSelectItems(NewPartyDisplayUI __instance)
+    {
+        if (__instance.SelectedSlotIndex >= 0)
+        {
+            savedIndex = __instance.SelectedSlotIndex;
+        }
+    }
+
+    [HarmonyPostfix]
+    [HarmonyPatch(typeof(NewPartyDisplayUI), "OnPerksSelected")]
+    private static void PostfixSelectPerks(NewPartyDisplayUI __instance)
+    {
+        if (__instance.SelectedSlotIndex >= 0)
+        {
+            savedIndex = __instance.SelectedSlotIndex;
+        }
+    }
+
+    [HarmonyPostfix]
+    [HarmonyPatch(typeof(NewPartyDisplayUI), "OnCharacterPickerSelected")]
+    private static void PostfixSelectPicker(NewPartyDisplayUI __instance)
+    {
+        if (__instance.SelectedSlotIndex >= 0)
+        {
+            savedIndex = __instance.SelectedSlotIndex;
+        }
     }
 
     [HarmonyPostfix]
