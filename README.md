@@ -11,5 +11,11 @@ This mod makes a few changes to user interface:
 3. Copy `UITweaks.dll` to the `BepInEx/plugins/` folder
 4. SteamDeck/Proton/Wine users only: [Configure wine](https://docs.bepinex.dev/articles/advanced/proton_wine.html) for BepInEx
 
-## Notes
+## Compatibility
 This mod is client-side only. You may safely play with other players that do not have the mod. This mod does not affect save files.
+
+## Other Mods
+You may be interested in other mods for Gloomhaven:
+- [Bug Fixes](https://github.com/gummyboars/gloomhaven-bugfixes)
+- [Camera Tweaks](https://github.com/gummyboars/gloomhaven-camera)
+- [Fast Load](https://github.com/gummyboars/gloomhaven-fastload)
